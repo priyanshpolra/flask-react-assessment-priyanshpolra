@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  backend-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    container_name: better-backend-test
+    working_dir: /app
+    volumes:
+      - ./src/apps/backend:/app
+    environment:
+      FLASK_ENV: testing
+    command: ["pytest"]
+
+  frontend-test:
+    build:
+      context: src/apps/frontend
+    container_name: better-frontend-test
+    working_dir: /app
+    volumes:
+      - ./src/apps/frontend:/app
+    command: ["npm", "test"]
